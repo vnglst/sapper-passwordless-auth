@@ -1,6 +1,6 @@
 {
-  "name": "TODO",
-  "description": "TODO",
+  "name": "sapper-auth",
+  "description": "sapper-auth",
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",
@@ -10,8 +10,14 @@
     "validate": "svelte-check --ignore src/node_modules/@sapper"
   },
   "dependencies": {
+    "@types/connect-redis": "0.0.14",
+    "@types/express-session": "^1.17.0",
+    "@types/ioredis": "^4.17.4",
     "compression": "^1.7.1",
+    "connect-redis": "^5.0.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "ioredis": "^4.17.3",
     "sirv": "^1.0.0"
   },
   "devDependencies": {
