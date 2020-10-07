@@ -1,8 +1,8 @@
 <script lang="ts">
+  import { __dev__ } from "@shared/constants";
+
   export let status: number;
   export let error: Error;
-
-  const dev = process.env.NODE_ENV === "development";
 </script>
 
 <svelte:head>
@@ -13,7 +13,7 @@
 
 <p>{error.message}</p>
 
-{#if dev && error.stack}
+{#if __dev__ && error.stack}
   <pre>{error.stack}</pre>
 {/if}
 
