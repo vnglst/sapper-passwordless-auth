@@ -25,9 +25,12 @@ declare global {
     client: Redis.Redis;
   }
   namespace Express {
+    export interface RequestContext {
+      db: PrismaClient;
+    }
     export interface Request {
       sessionStore: RedisStore;
-      context: { db: PrismaClient };
+      context: RequestContext;
     }
   }
 

@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { FORGET_PASSWORD_PREFIX } from "@shared/constants";
 import { v4 } from "uuid";
 import type { User } from "@prisma/client";
+import { registerSchema } from "./_validation";
 
 export async function post(req: Request, res: Response) {
   const redis = req.sessionStore.client;
@@ -9,28 +10,28 @@ export async function post(req: Request, res: Response) {
   const { email, name } = req.body;
   const token = v4();
 
+  try {
+    await registerSchema.validate(req.body, {
+      abortEarly: false,
+      context: req.context,
+    });
+  } catch (err) {
+    return res.status(422).json(err);
+  }
+
   let user: User;
   let alreadyUser = false;
 
   try {
-    const existingName = await db.user.findOne({ where: { name } });
-
-    if (existingName)
-      return res.json({ error: "Already in use", field: "name" });
-
     const existingEmail = await db.user.findOne({ where: { email } });
-
     if (existingEmail) {
       user = existingEmail;
       alreadyUser = true;
     } else {
-      console.log("creating user", email, name);
       user = await db.user.create({ data: { email, name } });
     }
-
-    console.log("user", user);
   } catch (e) {
-    console.error("Error", e);
+    console.error(e);
   }
 
   await redis.set(

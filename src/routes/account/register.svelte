@@ -13,6 +13,13 @@
   let status: string;
   let email: string;
   let name: string;
+  let errors = {};
+
+  const extractErrors = (err) => {
+    return err.inner.reduce((acc, err) => {
+      return { ...acc, [err.path]: err.message };
+    }, {});
+  };
 
   async function handleRegister() {
     const res = await niceFetch(`/api/register.json`, {
@@ -23,6 +30,12 @@
       },
       body: JSON.stringify({ email, name }),
     });
+
+    if (res.name === "ValidationError") {
+      errors = extractErrors(res);
+      return;
+    }
+
     status = res.status;
     goto("account/email-sent");
   }
@@ -38,7 +51,17 @@
 <p>Status {status}</p>
 
 <form on:submit|preventDefault={handleRegister} method="post">
-  <label>Name: <input type="text" bind:value={name} /> </label>
-  <label>Email: <input type="email" bind:value={email} /> </label>
+  <div>
+    <label>Name:
+      <input type="text" bind:value={name} />
+      {#if errors.name}<small>{errors.name}</small>{/if}
+    </label>
+  </div>
+  <div>
+    <label>Email:
+      <input type="email" bind:value={email} />
+      {#if errors.email}<small>{errors.email}</small>{/if}
+    </label>
+  </div>
   <button type="submit">Create new account</button>
 </form>

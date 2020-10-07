@@ -15,8 +15,9 @@ POST http://localhost:3000/api/register.json HTTP/1.1
 content-type: application/json
 
 {
-    "email": "k@k.nl",
-    "name": "Koen van Gilst"
+    "email": "koen@koen.nl",
+    "name": "VNGLST",
+    "junk": "junk"
 }
 
 ### login with token
