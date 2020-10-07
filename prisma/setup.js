@@ -8,7 +8,7 @@ async function up() {
   await prisma.$queryRaw`
         CREATE TABLE "public"."User" (
             id SERIAL PRIMARY KEY NOT NULL,
-            name VARCHAR(255),
+            name VARCHAR(255) UNIQUE NOT NULL,
             email VARCHAR(255) UNIQUE NOT NULL
         );
     `;
@@ -29,12 +29,12 @@ async function down() {
 `;
 
   await prisma.$queryRaw`
-        DROP TABLE "public"."User";
-    `;
+    DROP TABLE "public"."User";
+  `;
 }
 
-// up()
-down()
+up()
+  // down()
   .catch((e) => {
     throw e;
   })

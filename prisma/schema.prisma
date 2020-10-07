@@ -16,7 +16,7 @@ model Profile {
 
 model User {
   id      Int      @id @default(autoincrement())
-  name    String?
+  name    String   @unique
   email   String   @unique
   profile Profile?
 }

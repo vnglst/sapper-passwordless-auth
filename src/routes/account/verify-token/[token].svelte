@@ -12,7 +12,7 @@
     const res = await niceFetch(`/api/login/${token}.json`);
     status = res.status;
     $session.user = res.user;
-    goto("account/verify-token/success");
+    if (status === "logged in") goto("account/verify-token/success");
   });
 </script>
 

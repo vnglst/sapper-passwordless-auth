@@ -9,4 +9,17 @@ content-type: application/json
 {
     "email": "aescofier0@jigsy.com"
 }
+
+### register
+POST http://localhost:3000/api/register.json HTTP/1.1
+content-type: application/json
+
+{
+    "email": "k@k.nl",
+    "name": "Koen van Gilst"
+}
+
+### login with token
+GET http://localhost:3000/api/login/8e4f8ae2-9af5-4db0-bc33-ec4d71d2dfe1.json HTTP/1.1
+
     
