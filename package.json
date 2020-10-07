@@ -10,7 +10,7 @@
     "validate": "svelte-check --ignore src/node_modules/@sapper"
   },
   "dependencies": {
-    "@prisma/client": "^2.8.0",
+    "@prisma/client": "^2.8.1",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "connect-redis": "^5.0.0",
@@ -25,7 +25,7 @@
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/runtime": "^7.11.2",
-    "@prisma/cli": "^2.8.0",
+    "@prisma/cli": "^2.8.1",
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
