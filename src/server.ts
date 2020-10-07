@@ -19,6 +19,7 @@ const prisma = new PrismaClient({
   log: __prod__ ? [] : ["query", "info", "warn"],
 });
 
+// move this to separate typings file, how?
 declare global {
   export interface RedisStore {
     client: Redis.Redis;
@@ -28,6 +29,25 @@ declare global {
       sessionStore: RedisStore;
       context: { db: PrismaClient };
     }
+  }
+
+  // based on: import type { PreloadContext, Page } from "@sapper/common";
+  // but real implementation is not working
+  interface PreloadContext {
+    fetch: (url: string, options?: any) => Promise<any>;
+    error: (statusCode: number, message: Error | string) => void;
+    redirect: (statusCode: number, location: string) => void;
+  }
+  interface Page {
+    host: string;
+    path: string;
+    params: Record<string, string>;
+    query: Record<string, string | string[]>;
+    error?: Error;
+  }
+
+  export interface Preload {
+    (this: PreloadContext, page: Page, session: any): object | Promise<object>;
   }
 }
 

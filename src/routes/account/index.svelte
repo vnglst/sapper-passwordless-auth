@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  export const preload = async function (this, _page, { user }) {
+  export const preload: Preload = async function (this, _page, { user }) {
     if (!user) {
       this.redirect(302, `account/login`);
     }
