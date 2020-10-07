@@ -21,8 +21,6 @@ async function up() {
             FOREIGN KEY ("userId") REFERENCES "public"."User"(id)
         );
     `;
-
-  return prisma.$disconnect();
 }
 
 async function down() {
@@ -33,9 +31,13 @@ async function down() {
   await prisma.$queryRaw`
         DROP TABLE "public"."User";
     `;
-
-  return prisma.$disconnect();
 }
 
-up();
-// down();
+// up()
+down()
+  .catch((e) => {
+    throw e;
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

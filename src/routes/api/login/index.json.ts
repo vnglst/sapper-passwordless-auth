@@ -4,16 +4,21 @@ import { v4 } from "uuid";
 
 export async function post(req: Request, res: Response) {
   const redis = req.sessionStore.client;
+  const { db } = req.context;
   const { email } = req.body;
   const token = v4();
 
-  let userId = null;
+  // let userId = null;
 
-  if (email === "k@k.nl") {
-    userId = "koen-id"; // TODO: get from db based on email
-  }
+  // if (email === "k@k.nl") {
+  //   userId = "koen-id"; // TODO: get from db based on email
+  // }
 
-  if (!userId) {
+  const user = await db.user.findOne({ where: { email } });
+
+  console.log("user", user);
+
+  if (!user) {
     res.json({ status: "Email sent" });
     // send email telling user no account found, try again with different email here or register new account here
     return;
@@ -21,7 +26,7 @@ export async function post(req: Request, res: Response) {
 
   await redis.set(
     FORGET_PASSWORD_PREFIX + token,
-    userId,
+    user.id,
     "ex",
     1000 * 60 * 60 * 24 * 1 // 1 day
   );

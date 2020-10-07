@@ -1,18 +1,19 @@
-import type { Request, Response } from "express";
+import type { Handler } from "express";
 
-export async function get(req: Request, res: Response) {
+export const get: Handler = async function (req, res) {
   const redisStatus = req.sessionStore.client.status;
   const { db } = req.context;
 
-  let dbStatus = null;
+  let dbStatus = "";
 
   try {
     // execute random query; if success db is working correctly
-    await db.user.findFirst({});
+    const u = await db.user.findFirst({});
+    console.log(u);
     dbStatus = "OK";
   } catch (error) {
     dbStatus = "ERROR";
   }
 
   res.json({ status: "OK", redisStatus, dbStatus });
-}
+};
