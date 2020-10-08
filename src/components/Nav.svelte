@@ -43,7 +43,6 @@
 
 <style>
   nav {
-    border-bottom: 1px solid rgba(255, 62, 0, 0.1);
     font-weight: 300;
     padding: 0 1em;
   }
@@ -82,7 +81,7 @@
 
   a {
     text-decoration: none;
-    padding: 1em 0.5em;
+    padding: 0.75em 0.5em;
     display: block;
   }
 </style>
