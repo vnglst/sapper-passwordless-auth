@@ -7,11 +7,13 @@
 </script>
 
 <script lang="ts">
-  import { stores, goto } from "@sapper/app";
+  import { goto } from "@sapper/app";
   import { niceFetch } from "@shared/niceFetch";
-  const { session } = stores();
+  import { extractErrors, ExtractErrors } from "./response.model";
+
   let status: string;
   let email: string;
+  let errors: ReturnType<ExtractErrors> = {};
 
   async function handleLogin() {
     const res = await niceFetch(`/api/login.json`, {
@@ -22,6 +24,10 @@
       },
       body: JSON.stringify({ email }),
     });
+
+    errors = extractErrors(res);
+    if (errors) return;
+
     status = res.status;
     goto("account/email-sent");
   }
@@ -33,10 +39,11 @@
 
 <h1>Login</h1>
 
-<pre>Session {JSON.stringify($session)}</pre>
-<p>Status {status}</p>
-
 <form on:submit|preventDefault={handleLogin} method="post">
   <label>Email: <input type="email" bind:value={email} /> </label>
+  {#if status}
+    <p>{status}</p>
+  {/if}
   <button type="submit">Send magic link</button>
+  <p>No account yet? <a href="account/register">Register here</a>.</p>
 </form>

@@ -5,7 +5,7 @@
 <h1>Check your email</h1>
 
 <p>
-  A magic link has been sent to your email address. Please click on this link to
+  A magic link has been send to your email address. Please click on this link to
   log in to our website.
 </p>
 

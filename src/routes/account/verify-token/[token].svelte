@@ -22,6 +22,9 @@
 
 <h1>Verify magic link token</h1>
 
-<pre>{JSON.stringify($session)}</pre>
-
 <p>{status}</p>
+
+<p>
+  Magic link expired? Try requesting a
+  <a href="account/login">new magic link here</a>.
+</p>

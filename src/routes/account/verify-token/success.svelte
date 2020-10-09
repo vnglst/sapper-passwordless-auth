@@ -9,9 +9,10 @@
 
 <h1>Succesfully logged in</h1>
 
-<pre>Session {JSON.stringify($session)}</pre>
-
 <p>
-  You have succesfully logged in. You can now close this window or
-  <a href="/">continue to our website</a>
+  You are logged in as
+  <b>{$session.user.name}</b>
+  with
+  <i>{$session.user.email}</i>. You can now close this window or
+  <a href="/">continue to our website</a>.
 </p>

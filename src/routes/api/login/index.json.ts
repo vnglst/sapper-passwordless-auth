@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { FORGET_PASSWORD_PREFIX } from "@shared/constants";
 import { v4 } from "uuid";
+import { loginSchema } from "../_validation";
 
 export async function post(req: Request, res: Response) {
   const redis = req.sessionStore.client;
@@ -8,9 +9,13 @@ export async function post(req: Request, res: Response) {
   const { email } = req.body;
   const token = v4();
 
-  const user = await db.user.findOne({ where: { email } });
+  try {
+    await loginSchema.validate(req.body);
+  } catch (err) {
+    return res.status(422).json(err);
+  }
 
-  console.log("user", user);
+  const user = await db.user.findOne({ where: { email } });
 
   if (!user) {
     res.json({ status: "Email sent" });

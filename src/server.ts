@@ -33,9 +33,6 @@ declare global {
       context: RequestContext;
     }
   }
-
-  // based on: import type { PreloadContext, Page } from "@sapper/common";
-  // but real implementation is not working
   interface PreloadContext {
     fetch: (url: string, options?: any) => Promise<any>;
     error: (statusCode: number, message: Error | string) => void;

@@ -7,13 +7,14 @@
 </script>
 
 <script lang="ts">
-  import { stores } from "@sapper/app";
+  import { stores, goto } from "@sapper/app";
   import { niceFetch } from "@shared/niceFetch";
   const { session } = stores();
 
   async function handleLogout() {
     await niceFetch(`/api/logout.json`);
     $session.user = null;
+    goto("account/logout-successful");
   }
 </script>
 
@@ -21,8 +22,13 @@
   <title>Account</title>
 </svelte:head>
 
-<h1>You are logged in</h1>
+<h1>Account details</h1>
 
-<pre>{JSON.stringify($session)}</pre>
+<p>
+  You are logged in as
+  <b>{$session.user?.name}</b>
+  with
+  <i>{$session.user?.email}</i>.
+</p>
 
 <button on:click|preventDefault={handleLogout}>Log out</button>

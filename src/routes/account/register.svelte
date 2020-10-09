@@ -7,19 +7,14 @@
 </script>
 
 <script lang="ts">
-  import { stores, goto } from "@sapper/app";
+  import { goto } from "@sapper/app";
   import { niceFetch } from "@shared/niceFetch";
-  const { session } = stores();
+  import { extractErrors, ExtractErrors } from "./response.model";
+
   let status: string;
   let email: string;
   let name: string;
-  let errors = {};
-
-  const extractErrors = (err) => {
-    return err.inner.reduce((acc, err) => {
-      return { ...acc, [err.path]: err.message };
-    }, {});
-  };
+  let errors: ReturnType<ExtractErrors> = {};
 
   async function handleRegister() {
     const res = await niceFetch(`/api/register.json`, {
@@ -31,10 +26,8 @@
       body: JSON.stringify({ email, name }),
     });
 
-    if (res.name === "ValidationError") {
-      errors = extractErrors(res);
-      return;
-    }
+    errors = extractErrors(res);
+    if (errors) return;
 
     status = res.status;
     goto("account/email-sent");
@@ -42,13 +35,10 @@
 </script>
 
 <svelte:head>
-  <title>Register new account</title>
+  <title>Create account</title>
 </svelte:head>
 
-<h1>Register new account</h1>
-
-<pre>Session {JSON.stringify($session)}</pre>
-<p>Status {status}</p>
+<h1>Create account</h1>
 
 <form on:submit|preventDefault={handleRegister} method="post">
   <div>
@@ -63,5 +53,9 @@
       {#if errors.email}<small>{errors.email}</small>{/if}
     </label>
   </div>
+  {#if status}
+    <p>{status}</p>
+  {/if}
   <button type="submit">Create new account</button>
+  <p>Already have an account? <a href="account/login">Login here</a>.</p>
 </form>
