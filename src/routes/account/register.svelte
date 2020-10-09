@@ -9,7 +9,9 @@
 <script lang="ts">
   import { goto } from "@sapper/app";
   import { niceFetch } from "@shared/niceFetch";
-  import { extractErrors, ExtractErrors } from "./response.model";
+  import { isEmpty } from "@shared/isEmpty";
+  import { extractErrors } from "./response.model";
+  import type { ExtractErrors } from "./response.model";
 
   let status: string;
   let email: string;
@@ -27,7 +29,7 @@
     });
 
     errors = extractErrors(res);
-    if (errors) return;
+    if (!isEmpty(errors)) return;
 
     status = res.status;
     goto("account/email-sent");

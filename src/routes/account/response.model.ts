@@ -1,5 +1,5 @@
 export type ExtractErrors = (res: {
-  name: string;
+  name?: string;
   inner: Array<{ path: string; message: string }>;
 }) => { [key: string]: string };
 

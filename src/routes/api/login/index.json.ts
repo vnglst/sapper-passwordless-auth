@@ -4,18 +4,17 @@ import { v4 } from "uuid";
 import { loginSchema } from "../_validation";
 
 export async function post(req: Request, res: Response) {
-  const redis = req.sessionStore.client;
-  const { db } = req.context;
+  const { prisma, redis } = req.context;
   const { email } = req.body;
   const token = v4();
 
   try {
-    await loginSchema.validate(req.body);
+    await loginSchema.validate(req.body, { abortEarly: false });
   } catch (err) {
     return res.status(422).json(err);
   }
 
-  const user = await db.user.findOne({ where: { email } });
+  const user = await prisma.user.findOne({ where: { email } });
 
   if (!user) {
     res.json({ status: "Email sent" });

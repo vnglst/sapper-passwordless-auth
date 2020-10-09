@@ -20,6 +20,11 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*", "src/node_modules/**/*", "modules.d.ts"],
+  "include": [
+    "src/**/*",
+    "src/node_modules/**/*",
+    "modules.d.ts",
+    "global.d.ts"
+  ],
   "exclude": ["node_modules/*", "__sapper__/*", "static/*"]
 }

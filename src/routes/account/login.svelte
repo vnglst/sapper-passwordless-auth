@@ -9,7 +9,9 @@
 <script lang="ts">
   import { goto } from "@sapper/app";
   import { niceFetch } from "@shared/niceFetch";
-  import { extractErrors, ExtractErrors } from "./response.model";
+  import { extractErrors } from "./response.model";
+  import type { ExtractErrors } from "./response.model";
+  import { isEmpty } from "@shared/isEmpty";
 
   let status: string;
   let email: string;
@@ -26,7 +28,7 @@
     });
 
     errors = extractErrors(res);
-    if (errors) return;
+    if (!isEmpty(errors)) return;
 
     status = res.status;
     goto("account/email-sent");
@@ -40,7 +42,10 @@
 <h1>Login</h1>
 
 <form on:submit|preventDefault={handleLogin} method="post">
-  <label>Email: <input type="email" bind:value={email} /> </label>
+  <label>Email:
+    <input type="email" bind:value={email} />
+    {#if errors.email}<small>{errors.email}</small>{/if}
+  </label>
   {#if status}
     <p>{status}</p>
   {/if}

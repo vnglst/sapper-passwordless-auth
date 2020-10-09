@@ -4,11 +4,10 @@ import { tokenSchema } from "../_validation";
 
 export async function get(req: Request, res: Response) {
   const { token } = req.params;
-  const { db } = req.context;
-  const redis = req.sessionStore.client;
+  const { prisma, redis } = req.context;
 
   try {
-    await tokenSchema.validate(req.params);
+    await tokenSchema.validate(req.params, { abortEarly: false });
   } catch (err) {
     return res.status(401).json({ status: "token invalid" });
   }
@@ -16,7 +15,9 @@ export async function get(req: Request, res: Response) {
   const userId = await redis.get(FORGET_PASSWORD_PREFIX + token);
 
   if (userId) {
-    const user = await db.user.findOne({ where: { id: parseInt(userId, 10) } });
+    const user = await prisma.user.findOne({
+      where: { id: parseInt(userId, 10) },
+    });
     req.session!.user = user;
     return res.json({ status: "logged in", user });
   }

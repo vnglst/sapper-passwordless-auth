@@ -5,8 +5,7 @@ import type { User } from "@prisma/client";
 import { registerSchema } from "./_validation";
 
 export async function post(req: Request, res: Response) {
-  const redis = req.sessionStore.client;
-  const { db } = req.context;
+  const { prisma, redis } = req.context;
   const { email, name } = req.body;
   const token = v4();
 
@@ -23,12 +22,12 @@ export async function post(req: Request, res: Response) {
   let alreadyUser = false;
 
   try {
-    const existingEmail = await db.user.findOne({ where: { email } });
+    const existingEmail = await prisma.user.findOne({ where: { email } });
     if (existingEmail) {
       user = existingEmail;
       alreadyUser = true;
     } else {
-      user = await db.user.create({ data: { email, name } });
+      user = await prisma.user.create({ data: { email, name } });
     }
   } catch (e) {
     console.error(e);
