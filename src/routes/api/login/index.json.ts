@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { FORGET_PASSWORD_PREFIX } from "@shared/constants";
+import { FORGET_PASSWORD_PREFIX } from "../../../constants";
 import { v4 } from "uuid";
 import { loginSchema } from "../_validation";
 

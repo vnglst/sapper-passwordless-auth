@@ -8,10 +8,10 @@
 
 <script lang="ts">
   import { goto } from "@sapper/app";
-  import { niceFetch } from "@shared/niceFetch";
+  import { niceFetch } from "../_clientHelpers/niceFetch";
   import { extractErrors } from "./response.model";
   import type { ExtractErrors } from "./response.model";
-  import { isEmpty } from "@shared/isEmpty";
+  import { isEmpty } from "../_sharedHelpers/isEmpty";
 
   let status: string;
   let email: string;

@@ -8,7 +8,7 @@
 
 <script lang="ts">
   import { stores, goto } from "@sapper/app";
-  import { niceFetch } from "@shared/niceFetch";
+  import { niceFetch } from "../_clientHelpers/niceFetch";
   const { session } = stores();
 
   async function handleLogout() {

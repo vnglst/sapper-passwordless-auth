@@ -1,10 +1,11 @@
-import type { Request, Response } from "express";
-import { FORGET_PASSWORD_PREFIX } from "@shared/constants";
+import type { NextFunction, Request, Response } from "express";
+import { FORGET_PASSWORD_PREFIX } from "../../constants";
 import { v4 } from "uuid";
 import type { User } from "@prisma/client";
 import { registerSchema } from "./_validation";
 
-export async function post(req: Request, res: Response) {
+export async function post(req: Request, res: Response, next: NextFunction) {
+  console.log("start");
   const { prisma, redis } = req.context;
   const { email, name } = req.body;
   const token = v4();
@@ -15,8 +16,12 @@ export async function post(req: Request, res: Response) {
       context: req.context,
     });
   } catch (err) {
+    console.log("here", err);
+    // return next(err);
     return res.status(422).json(err);
   }
+
+  console.log("yi");
 
   let user: User;
   let alreadyUser = false;
@@ -30,7 +35,7 @@ export async function post(req: Request, res: Response) {
       user = await prisma.user.create({ data: { email, name } });
     }
   } catch (e) {
-    console.error(e);
+    console.error("here", e);
   }
 
   await redis.set(

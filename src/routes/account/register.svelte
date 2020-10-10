@@ -8,8 +8,8 @@
 
 <script lang="ts">
   import { goto } from "@sapper/app";
-  import { niceFetch } from "@shared/niceFetch";
-  import { isEmpty } from "@shared/isEmpty";
+  import { niceFetch } from "../_clientHelpers/niceFetch";
+  import { isEmpty } from "../_sharedHelpers/isEmpty";
   import { extractErrors } from "./response.model";
   import type { ExtractErrors } from "./response.model";
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { __dev__ } from "@shared/constants";
+  import { __dev__ } from "../constants";
 
   export let status: number;
   export let error: Error;

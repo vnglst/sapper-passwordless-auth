@@ -6,7 +6,7 @@ import sirv from "sirv";
 import Redis from "ioredis";
 import session from "express-session";
 import connectRedis, { RedisStore } from "connect-redis";
-import { __prod__, COOKIE_NAME, __dev__ } from "@shared/constants";
+import { __prod__, COOKIE_NAME, __dev__ } from "./constants";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import { setContext } from "./middlewares/setContext";
@@ -50,5 +50,15 @@ const app = express()
       },
     })
   );
+// .use((error: any, _req: any, res: any) => {
+//   console.log("middelware", typeof error);
+//   if (!error.statusCode) error.statusCode = 500;
+
+//   if (error.statusCode === 301) {
+//     return res.status(301).redirect("/not-found");
+//   }
+
+//   return res.status(error.statusCode).json({ error: error.toString() });
+// });
 
 app.listen(process.env.PORT);

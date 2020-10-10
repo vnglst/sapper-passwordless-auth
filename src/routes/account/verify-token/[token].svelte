@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { niceFetch } from "@shared/niceFetch";
+  import { niceFetch } from "../../_clientHelpers/niceFetch";
   import { stores, goto } from "@sapper/app";
   import { onMount } from "svelte";
 

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { FORGET_PASSWORD_PREFIX } from "@shared/constants";
+import { FORGET_PASSWORD_PREFIX } from "../../../constants";
 import { tokenSchema } from "../_validation";
 
 export async function get(req: Request, res: Response) {
