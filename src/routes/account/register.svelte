@@ -9,7 +9,7 @@
 <script lang="ts">
   import { goto } from "@sapper/app";
   import { niceFetch } from "../_clientHelpers/niceFetch";
-  import { isEmpty } from "../_sharedHelpers/isEmpty";
+  import { isEmpty } from "../../sharedHelpers/isEmpty";
   import { extractErrors } from "./response.model";
   import type { ExtractErrors } from "./response.model";
 
@@ -19,7 +19,7 @@
   let errors: ReturnType<ExtractErrors> = {};
 
   async function handleRegister() {
-    const res = await niceFetch(`/api/register.json`, {
+    const res = await niceFetch(`/api/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

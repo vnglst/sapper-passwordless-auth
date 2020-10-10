@@ -12,7 +12,7 @@
   const { session } = stores();
 
   async function handleLogout() {
-    await niceFetch(`/api/logout.json`);
+    await niceFetch(`/api/logout`);
     $session.user = null;
     goto("account/logout-successful");
   }

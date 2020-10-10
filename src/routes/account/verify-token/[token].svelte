@@ -9,7 +9,7 @@
   let status: string;
 
   onMount(async () => {
-    const res = await niceFetch(`/api/login/${token}.json`);
+    const res = await niceFetch(`/api/login/${token}`);
     status = res.status;
     $session.user = res.user;
     if (status === "logged in") goto("account/verify-token/success");

@@ -1,14 +1,15 @@
-import * as sapper from "@sapper/server";
-import compression from "compression";
-import express, { Request } from "express";
-import { json } from "body-parser";
-import sirv from "sirv";
-import Redis from "ioredis";
-import session from "express-session";
-import connectRedis, { RedisStore } from "connect-redis";
-import { __prod__, COOKIE_NAME, __dev__ } from "./constants";
 import { PrismaClient } from "@prisma/client";
+import * as sapper from "@sapper/server";
+import { json } from "body-parser";
+import compression from "compression";
+import connectRedis, { RedisStore } from "connect-redis";
 import dotenv from "dotenv";
+import express, { Request } from "express";
+import session from "express-session";
+import Redis from "ioredis";
+import sirv from "sirv";
+import apiRoutes from "./api/routes";
+import { COOKIE_NAME, __dev__, __prod__ } from "./constants";
 import { setContext } from "./middlewares/setContext";
 
 dotenv.config();
@@ -41,24 +42,18 @@ const app = express()
     })
   )
   .use(setContext({ prisma, redis }))
+  // api routes
+  .use("/api", apiRoutes)
+  // client side routing
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev: __dev__ }),
     sapper.middleware({
+      ignore: [(uri: string) => uri.startsWith("/api")],
       session: (req: Request) => {
         return { user: req.session?.user };
       },
     })
   );
-// .use((error: any, _req: any, res: any) => {
-//   console.log("middelware", typeof error);
-//   if (!error.statusCode) error.statusCode = 500;
-
-//   if (error.statusCode === 301) {
-//     return res.status(301).redirect("/not-found");
-//   }
-
-//   return res.status(error.statusCode).json({ error: error.toString() });
-// });
 
 app.listen(process.env.PORT);

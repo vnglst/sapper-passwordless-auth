@@ -1,18 +1,14 @@
-import type { Request, Response } from "express";
-import { FORGET_PASSWORD_PREFIX } from "../../../constants";
+import type { Handler } from "express";
+import { FORGET_PASSWORD_PREFIX } from "../../constants";
 import { v4 } from "uuid";
-import { loginSchema } from "../_validation";
+import { loginSchema } from "../validation";
 
-export async function post(req: Request, res: Response) {
+export const postLogin: Handler = async (req, res) => {
   const { prisma, redis } = req.context;
   const { email } = req.body;
   const token = v4();
 
-  try {
-    await loginSchema.validate(req.body, { abortEarly: false });
-  } catch (err) {
-    return res.status(422).json(err);
-  }
+  await loginSchema.validate(req.body, { abortEarly: false });
 
   const user = await prisma.user.findOne({ where: { email } });
 
@@ -34,4 +30,4 @@ export async function post(req: Request, res: Response) {
   console.log("link: ", `http://localhost:3000/account/verify-token/${token}`);
 
   return res.json({ status: "Email sent" });
-}
+};

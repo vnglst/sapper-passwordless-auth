@@ -1,8 +1,8 @@
-import type { Request, Response } from "express";
-import { FORGET_PASSWORD_PREFIX } from "../../../constants";
-import { tokenSchema } from "../_validation";
+import type { Handler } from "express";
+import { FORGET_PASSWORD_PREFIX } from "../../constants";
+import { tokenSchema } from "../validation";
 
-export async function get(req: Request, res: Response) {
+export const getToken: Handler = async function (req, res) {
   const { token } = req.params;
   const { prisma, redis } = req.context;
 
@@ -23,4 +23,4 @@ export async function get(req: Request, res: Response) {
   }
 
   return res.status(401).json({ status: "token expired" });
-}
+};

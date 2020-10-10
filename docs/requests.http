@@ -1,17 +1,17 @@
 
 ### health check
-GET http://localhost:3000/api/health.json HTTP/1.1
+GET http://localhost:3000/api/health HTTP/1.1
 
 ### login / request magic link
-POST http://localhost:3000/api/login.json HTTP/1.1
+POST http://localhost:3000/api/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "aescofier0@jigsy.com"
+    "email": "aescofier0"
 }
 
 ### register
-POST http://localhost:3000/api/register.json HTTP/1.1
+POST http://localhost:3000/api/register HTTP/1.1
 content-type: application/json
 
 {
@@ -20,6 +20,6 @@ content-type: application/json
 }
 
 ### login with token
-GET http://localhost:3000/api/login/8e4f8ae2-9af5-4db0-bc33-ec4d71d2dfe1.json HTTP/1.1
+GET http://localhost:3000/api/login/8e4f8ae2-9af5-4db0-bc33-ec4d71d2dfe1 HTTP/1.1
 
     

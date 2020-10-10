@@ -11,14 +11,14 @@
   import { niceFetch } from "../_clientHelpers/niceFetch";
   import { extractErrors } from "./response.model";
   import type { ExtractErrors } from "./response.model";
-  import { isEmpty } from "../_sharedHelpers/isEmpty";
+  import { isEmpty } from "../../sharedHelpers/isEmpty";
 
   let status: string;
   let email: string;
   let errors: ReturnType<ExtractErrors> = {};
 
   async function handleLogin() {
-    const res = await niceFetch(`/api/login.json`, {
+    const res = await niceFetch(`/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
