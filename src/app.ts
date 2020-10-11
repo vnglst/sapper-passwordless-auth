@@ -9,8 +9,11 @@ import sirv from "sirv";
 import apiRoutes from "./api/api.routes";
 import { COOKIE_NAME, __dev__, __prod__ } from "./constants";
 import { RedisStore, redis } from "./services/redis";
+import { logger } from "./services/logger";
 
 dotenv.config({ path: ".env" });
+
+logger.info(`starting app in ${process.env.NODE_ENV}`);
 
 export const app = express()
   .use(
