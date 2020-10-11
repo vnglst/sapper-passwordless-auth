@@ -13,12 +13,14 @@
   import { extractErrors } from "./_response.model";
   import type { ExtractErrors } from "./_response.model";
 
+  let loading: boolean;
   let status: string;
   let email: string;
   let name: string;
   let errors: ReturnType<ExtractErrors> = {};
 
   async function handleRegister() {
+    loading = true;
     const res = await niceFetch(`/api/register`, {
       method: "POST",
       headers: {
@@ -27,6 +29,7 @@
       },
       body: JSON.stringify({ email, name }),
     });
+    loading = false;
 
     errors = extractErrors(res);
     if (!isEmpty(errors)) return;
@@ -45,19 +48,19 @@
 <form on:submit|preventDefault={handleRegister} method="post">
   <div>
     <label>Name:
-      <input type="text" bind:value={name} />
+      <input type="text" bind:value={name} required />
       {#if errors.name}<small>{errors.name}</small>{/if}
     </label>
   </div>
   <div>
     <label>Email:
-      <input type="email" bind:value={email} />
+      <input type="email" bind:value={email} required />
       {#if errors.email}<small>{errors.email}</small>{/if}
     </label>
   </div>
   {#if status}
     <p>{status}</p>
   {/if}
-  <button type="submit">Create new account</button>
+  <button type="submit" disabled={loading}>Create new account</button>
   <p>Already have an account? <a href="account/login">Login here</a>.</p>
 </form>

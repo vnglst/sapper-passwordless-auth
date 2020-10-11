@@ -1,14 +1,28 @@
+import dotenv from "dotenv";
 import * as sapper from "@sapper/server";
 import { json } from "body-parser";
 import compression from "compression";
 import express, { Request } from "express";
 import session from "express-session";
+import helmet from "helmet";
 import sirv from "sirv";
 import apiRoutes from "./api/api.routes";
 import { COOKIE_NAME, __dev__, __prod__ } from "./constants";
 import { RedisStore, redis } from "./services/redis";
 
+dotenv.config({ path: ".env" });
+
 export const app = express()
+  .use(
+    helmet({
+      // TODO: review security settings, especially CSP
+      contentSecurityPolicy: __prod__
+        ? {
+            reportOnly: true,
+          }
+        : false,
+    })
+  )
   .use(json())
   .use(
     session({

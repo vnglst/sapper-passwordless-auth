@@ -13,11 +13,13 @@
   import type { ExtractErrors } from "./_response.model";
   import { isEmpty } from "../../sharedHelpers/isEmpty";
 
+  let loading: boolean;
   let status: string;
   let email: string;
   let errors: ReturnType<ExtractErrors> = {};
 
   async function handleLogin() {
+    loading = true;
     const res = await niceFetch(`/api/login`, {
       method: "POST",
       headers: {
@@ -26,6 +28,8 @@
       },
       body: JSON.stringify({ email }),
     });
+
+    loading = false;
 
     errors = extractErrors(res);
     if (!isEmpty(errors)) return;
@@ -43,12 +47,12 @@
 
 <form on:submit|preventDefault={handleLogin} method="post">
   <label>Email:
-    <input type="email" bind:value={email} />
+    <input type="email" bind:value={email} required />
     {#if errors.email}<small>{errors.email}</small>{/if}
   </label>
   {#if status}
     <p>{status}</p>
   {/if}
-  <button type="submit">Send magic link</button>
+  <button type="submit" disabled={loading}>Send magic link</button>
   <p>No account yet? <a href="account/register">Register here</a>.</p>
 </form>
