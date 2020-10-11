@@ -1,11 +1,11 @@
 import * as yup from "yup";
+import { prisma } from "../../services/prisma";
 
 const checkName: yup.TestFunction<
   string | null | undefined,
   object
 > = async function (name) {
   if (!name) return false;
-  const { prisma } = this.options.context as Express.RequestContext;
   const user = await prisma.user.findOne({ where: { name: name! } });
   if (user) return false;
   return true;

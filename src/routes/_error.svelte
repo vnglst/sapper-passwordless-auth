@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { __dev__ } from "../constants";
-
   export let status: number;
   export let error: Error;
 </script>
@@ -13,6 +11,6 @@
 
 <p>{error.message}</p>
 
-{#if __dev__ && error.stack}
+{#if process.env.NODE_ENV === 'development' && error.stack}
   <pre>{error.stack}</pre>
 {/if}

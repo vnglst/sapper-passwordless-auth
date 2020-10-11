@@ -1,3 +1,4 @@
+// Not sure why this is required, possibly bug in sapper typing
 interface PreloadContext {
   fetch: (url: string, options?: any) => Promise<any>;
   error: (statusCode: number, message: Error | string) => void;
@@ -12,17 +13,6 @@ interface Page {
   error?: Error;
 }
 
-// Not sure why this is required, possibly bug in sapper typing
 interface Preload {
   (this: PreloadContext, page: Page, session: any): object | Promise<object>;
-}
-
-namespace Express {
-  export interface RequestContext {
-    prisma: PrismaClient;
-    redis: Redis.Redis;
-  }
-  export interface Request {
-    context: RequestContext;
-  }
 }

@@ -1,11 +1,8 @@
 import express from "express";
 import { errorHandler } from "../middlewares/errorHandler";
-import { handleAsyncErrors } from "./apiHelpers/asyncUtil";
-import { getHealth } from "./controllers/health";
-import { postLogin } from "./controllers/login";
-import { getLogout } from "./controllers/logout";
-import { postRegister } from "./controllers/register";
-import { getToken } from "./controllers/token";
+import { handleAsyncErrors } from "./api.helpers";
+import { getHealth } from "./health";
+import { postLogin, getLogout, postRegister, getToken } from "./users";
 
 const router = express.Router();
 

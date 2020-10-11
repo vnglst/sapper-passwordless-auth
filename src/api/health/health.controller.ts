@@ -1,8 +1,7 @@
 import type { Handler } from "express";
+import { prisma, redis } from "../../services";
 
-export const getHealth: Handler = async function (req, res) {
-  const { prisma, redis } = req.context;
-
+export const getHealth: Handler = async function (_req, res) {
   let dbStatus = "";
 
   try {

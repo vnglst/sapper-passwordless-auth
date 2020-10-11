@@ -9,8 +9,8 @@
 <script lang="ts">
   import { goto } from "@sapper/app";
   import { niceFetch } from "../_clientHelpers/niceFetch";
-  import { extractErrors } from "./response.model";
-  import type { ExtractErrors } from "./response.model";
+  import { extractErrors } from "./_response.model";
+  import type { ExtractErrors } from "./_response.model";
   import { isEmpty } from "../../sharedHelpers/isEmpty";
 
   let status: string;
