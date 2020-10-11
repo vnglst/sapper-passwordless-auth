@@ -1,0 +1,6 @@
+DATABASE_URL="postgres://passwordless@localhost:5432/passwordless?schema=public"
+REDIS="127.0.0.1:6379"
+COOKIE_SECRET="some-secret"
+BASE_URL="http://localhost:3000"
+MAIL_USER=create test account on https://ethereal.email/
+MAIL_PASS=...
