@@ -1,9 +1,5 @@
-const { PrismaClient } = require("@prisma/client");
+const { prisma } = require("./setup");
 const { users } = require("./seedData");
-
-const prisma = new PrismaClient({
-  log: ["query", "info", "warn"],
-});
 
 async function up() {
   for (const user of users) {
@@ -11,12 +7,7 @@ async function up() {
   }
 }
 
-async function down() {
-  await prisma.user.deleteMany({});
-}
-
 up()
-  // down()
   .catch((e) => {
     throw e;
   })

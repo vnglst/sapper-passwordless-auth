@@ -4,7 +4,7 @@ const prisma = new PrismaClient({
   log: ["query", "info", "warn"],
 });
 
-async function up() {
+async function up(prisma) {
   await prisma.$queryRaw`
         CREATE TABLE "public"."User" (
             id SERIAL PRIMARY KEY NOT NULL,
@@ -23,7 +23,7 @@ async function up() {
     `;
 }
 
-async function down() {
+async function down(prisma) {
   await prisma.$queryRaw`
     DROP TABLE "public"."Profile";
 `;
@@ -33,11 +33,8 @@ async function down() {
   `;
 }
 
-up()
-  // down()
-  .catch((e) => {
-    throw e;
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+module.exports = {
+  up,
+  down,
+  prisma,
+};
