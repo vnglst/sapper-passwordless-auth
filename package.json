@@ -9,9 +9,10 @@
     "start": "node __sapper__/build",
     "validate": "svelte-check --ignore src/node_modules/@sapper",
     "db:create": "node ./prisma/setup.up.js",
-    "db:clean": "node ./prisma/seed.down.js",
     "db:delete": "node ./prisma/setup.down.js",
-    "db:reset": "npm run db:delete; npm run db:create; node ./prisma/seed.up.js"
+    "db:seed": "node ./prisma/seed.up.js",
+    "db:wipe": "node ./prisma/seed.down.js",
+    "db:reset": "npm run db:delete; npm run db:create; npm run db:seed"
   },
   "dependencies": {
     "@prisma/client": "^2.8.1",
